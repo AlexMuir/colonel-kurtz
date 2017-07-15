@@ -56,7 +56,13 @@ module.exports = React.createClass({
 
   getContent(block) {
     let { component } = this.getBlockType()
-    let defaults = typeof component.getDefaultProps === 'function' ? component.getDefaultProps() : {}
+    if(typeof component.getDefaultProps === 'function') {
+      let defaults = component.getDefaultProps();
+    } else if(typeof component.defaultProps === 'Object') {
+      let defaults = component.defaultProps;
+    } else {
+      let defaults = {}
+    }
 
     return { ...defaults.content, ...block.content }
   },
